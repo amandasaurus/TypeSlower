@@ -135,7 +135,7 @@ class TypeSlowerIndicator(object):
 
 if __name__ == "__main__":
     indicator = TypeSlowerIndicator()
-    # commenting this out makes the indicator not work.
+    # commenting this out makes the indicator work.
     # look at how indicator-sysmonitor does it
     monitor = TypeSlowerMonitor(indicator)
 
