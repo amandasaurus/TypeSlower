@@ -86,15 +86,23 @@ class StatusChecker(Thread):
 
 class TypeSlowerIndicator(object):
     def __init__(self):
+        self.keypresses = []
 
-        ind = appindicator.Indicator ("example-simple-client", "indicator-messages", appindicator.CATEGORY_APPLICATION_STATUS)
+        self.hm = pyxhook.HookManager()
+        self.hm.HookKeyboard()
+        self.hm.HookMouse()
+        self.hm.KeyDown = self.keydown
 
-        #ind = appindicator.Indicator ("indicator-sysmonitor",
-        #  "sysmonitor",
-        #    appindicator.CATEGORY_SYSTEM_SERVICES)
+
+        self.hm.start()
+
+        ind = appindicator.Indicator ("indicator-sysmonitor",
+          "sysmonitor",
+            appindicator.CATEGORY_SYSTEM_SERVICES)
+
         ind.set_status(appindicator.STATUS_ACTIVE)
         ind.set_attention_icon("indicator-messages-new")
-        #ind.set_label("init")
+        ind.set_label("init")
 
         menu_item = gtk.MenuItem("test")
         menu = gtk.Menu()
@@ -104,8 +112,11 @@ class TypeSlowerIndicator(object):
 
         self.ind = ind
 
-        self.monitor = TypeSlowerMonitor(self)
-        self.monitor.start()
+
+    def keydown(self, event):
+        print "Keydown"
+        now = time.time()
+        self.keypresses.append(now)
 
     def d__init__(self):
         ind = appindicator.Indicator ("example-simple-client", "indicator-messages", appindicator.CATEGORY_APPLICATION_STATUS)
