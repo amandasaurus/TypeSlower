@@ -26,6 +26,7 @@ class TypeSlowerMonitor(Thread):
         #hm.KeyUp = self.hook_manager_event #hm.printevent
         #hm.MouseAllButtonsDown = hm.printevent
         #hm.MouseAllButtonsUp = hm.printevent
+        self.status_printer.start()
 
     def run(self):
         print "running"
@@ -34,7 +35,7 @@ class TypeSlowerMonitor(Thread):
 
         self.hm.start()
 
-        #self.status_printer.start()
+        self.status_printer.start()
 
         self.hm.join()
 
@@ -51,7 +52,7 @@ class TypeSlowerMonitor(Thread):
         with open("/tmp/keypresses.pickle", "w") as fp:
             pickle.dump(self.keypresses, fp)
 
-        Timer(delay, self.dump, args=[delay]).start()
+        #Timer(delay, self.dump, args=[delay]).start()
         
 
 
