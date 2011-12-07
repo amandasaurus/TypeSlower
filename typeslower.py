@@ -19,24 +19,24 @@ class TypeSlowerMonitor(Thread):
         Thread.__init__(self)
         self.indicator = indicator
         self.status_printer = StatusChecker(self, indicator)
-
-    def run(self):
-
-        hm = pyxhook.HookManager()
-        hm.HookKeyboard()
-        hm.HookMouse()
-        hm.KeyDown = self.keydown
+        self.hm = pyxhook.HookManager()
+        self.hm.HookKeyboard()
+        self.hm.HookMouse()
+        self.hm.KeyDown = self.keydown
         #hm.KeyUp = self.hook_manager_event #hm.printevent
         #hm.MouseAllButtonsDown = hm.printevent
         #hm.MouseAllButtonsUp = hm.printevent
-        hm.start()
-        self.hm = hm
+
+    def run(self):
+        print "running"
 
         self.keypresses = []
 
-        self.status_printer.start()
+        self.hm.start()
 
-        hm.join()
+        #self.status_printer.start()
+
+        self.hm.join()
 
 
     def keydown(self, event):
