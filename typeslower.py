@@ -14,9 +14,13 @@ TOO_FAST = [
 ]
 
 
-class TypeSlowerMonitor(object):
+class TypeSlowerMonitor(Thread):
     def __init__(self, indicator):
+        Thread.__init__(self)
         self.indicator = indicator
+        self.status_printer = StatusChecker(self, indicator)
+
+    def run(self):
 
         hm = pyxhook.HookManager()
         hm.HookKeyboard()
@@ -30,10 +34,8 @@ class TypeSlowerMonitor(object):
 
         self.keypresses = []
 
-        self.status_printer = StatusChecker(self, indicator)
         self.status_printer.start()
 
-        self.dump()
         hm.join()
 
 
@@ -101,6 +103,8 @@ class TypeSlowerIndicator(object):
 
         self.ind = ind
 
+        self.monitor = TypeSlowerMonitor(self)
+
     def __init__(self):
         ind = appindicator.Indicator ("example-simple-client", "indicator-messages", appindicator.CATEGORY_APPLICATION_STATUS)
         ind.set_status (appindicator.STATUS_ACTIVE)
@@ -137,7 +141,6 @@ if __name__ == "__main__":
     indicator = TypeSlowerIndicator()
     # commenting this out makes the indicator work.
     # look at how indicator-sysmonitor does it
-    monitor = TypeSlowerMonitor(indicator)
 
     gtk.main()
 
