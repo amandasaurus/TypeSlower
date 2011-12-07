@@ -84,7 +84,7 @@ class StatusChecker(Thread):
 #
 
 class TypeSlowerIndicator(object):
-    def d__init__(self):
+    def __init__(self):
 
         ind = appindicator.Indicator ("example-simple-client", "indicator-messages", appindicator.CATEGORY_APPLICATION_STATUS)
 
@@ -105,7 +105,7 @@ class TypeSlowerIndicator(object):
 
         self.monitor = TypeSlowerMonitor(self)
 
-    def __init__(self):
+    def d__init__(self):
         ind = appindicator.Indicator ("example-simple-client", "indicator-messages", appindicator.CATEGORY_APPLICATION_STATUS)
         ind.set_status (appindicator.STATUS_ACTIVE)
         ind.set_attention_icon ("indicator-messages-new")
