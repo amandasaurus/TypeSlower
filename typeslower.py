@@ -104,6 +104,7 @@ class TypeSlowerIndicator(object):
         self.ind = ind
 
         self.monitor = TypeSlowerMonitor(self)
+        self.monitor.start()
 
     def d__init__(self):
         ind = appindicator.Indicator ("example-simple-client", "indicator-messages", appindicator.CATEGORY_APPLICATION_STATUS)
