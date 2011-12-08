@@ -4,7 +4,7 @@ from __future__ import division
 import time, datetime, pickle, signal
 import pyxhook
 import pynotify
-from threading import Thread, Timer
+from threading import Thread, Timer, Event
 
 import gobject, gtk, appindicator
 
@@ -24,7 +24,7 @@ class UpdateLabel(Thread):
         self.indicator = indicator
 
     def run(self):
-        while True:
+        while self.indicator.finished.is_set():
             now = time.time()
             new_label_parts = []
             for period in TOO_FAST:
@@ -63,6 +63,8 @@ class TypeSlowerIndicator(object):
 
         self.ind = ind
 
+        self.finished = Event()
+
         self.updater = UpdateLabel(self)
         self.updater.start()
 
@@ -74,13 +76,20 @@ class TypeSlowerIndicator(object):
     def set_label(self, text):
         print text
         #self.ind.set_label(text, text)
+
+    def cancel(self):
+        self.finished.set()
+        self.hm.cancel()
         
 
 
 if __name__ == "__main__":
     indicator = TypeSlowerIndicator()
 
-    gtk.main()
+    try:
+        gtk.main()
+    finally:
+        indicator.cancel()
 
 if __name__ == '__main__':
     main()
