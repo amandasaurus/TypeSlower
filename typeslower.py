@@ -13,6 +13,7 @@ TOO_FAST = [
     #{'chars':200, 'sec':60},
 ]
 
+gtk.gdk.threads_init()
 
 class TypeSlowerMonitor(Thread):
     def __init__(self, indicator):
