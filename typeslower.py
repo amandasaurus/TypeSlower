@@ -14,6 +14,8 @@ TOO_FAST = [
     {'chars':200, 'sec':60},
 ]
 
+TOO_FAST.sort(key=lambda x:x['sec'])
+
 gtk.gdk.threads_init()
 
 class UpdateLabel(Thread):
