@@ -10,7 +10,8 @@ import gobject, gtk, appindicator
 
 TOO_FAST = [
     {'chars':10, 'sec':5},
-    #{'chars':200, 'sec':60},
+    {'chars':2, 'sec':0.5},
+    {'chars':200, 'sec':60},
 ]
 
 gtk.gdk.threads_init()
