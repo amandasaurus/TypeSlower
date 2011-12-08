@@ -15,6 +15,23 @@ TOO_FAST = [
 
 gtk.gdk.threads_init()
 
+class UpdateLabel(Thread):
+    def __init__(self, indicator):
+        Thread.__init__(self)
+        self.indicator = indicator
+
+    def run(self):
+        while True:
+            now = time.time()
+            new_label_parts = []
+            for period in TOO_FAST:
+                num_this_period = len([x for x in self.indicator.keypresses if now - x < period['sec']])
+                ratio = num_this_period / period['chars']
+                new_label_parts.append("{0}s: ×{1:.1f}".format(period['sec'], ratio))
+
+            self.indicator.ind.set_label(" ".join(new_label_parts))
+            time.sleep(0.2)
+
 
 class TypeSlowerIndicator(object):
     def __init__(self):
@@ -42,6 +59,9 @@ class TypeSlowerIndicator(object):
         ind.set_menu(menu)
 
         self.ind = ind
+
+        self.updater = UpdateLabel(self)
+        self.updater.start()
 
 
     def keydown(self, event):
