@@ -25,7 +25,7 @@ class UpdateLabel(Thread):
         self.indicator = indicator
 
     def run(self):
-        while self.indicator.finished.is_set():
+        while not self.indicator.finished.is_set():
             now = time.time()
             new_label_parts = []
             for period in TOO_FAST:
