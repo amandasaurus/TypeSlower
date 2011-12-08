@@ -29,8 +29,6 @@ class TypeSlowerMonitor(Thread):
         self.status_printer.start()
 
     def run(self):
-        print "running"
-
         self.keypresses = []
 
         self.hm.start()
@@ -41,6 +39,7 @@ class TypeSlowerMonitor(Thread):
 
 
     def keydown(self, event):
+        print "Keydown"
         now = time.time()
         self.keypresses.append(now)
 
