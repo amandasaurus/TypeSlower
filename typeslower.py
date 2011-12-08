@@ -65,7 +65,6 @@ class TypeSlowerIndicator(object):
 
 
     def keydown(self, event):
-        print "Keydown"
         now = time.time()
         self.keypresses.append(now)
 
