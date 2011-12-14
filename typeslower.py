@@ -32,7 +32,7 @@ class UpdateLabel(Thread):
             for period in TOO_FAST:
                 num_this_period = len([x for x in self.indicator.keypresses if now - x < period['sec']])
                 ratio = num_this_period / period['chars']
-                new_label_parts.append("{0}s: ×{1:.1f}".format(period['sec'], ratio))
+                new_label_parts.append("{ratio:.1f} ({time})".format(time=period['sec'], ratio=ratio))
 
             self.indicator.ind.set_label(" ".join(new_label_parts))
             time.sleep(0.2)
