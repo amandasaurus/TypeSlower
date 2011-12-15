@@ -10,10 +10,9 @@ from threading import Thread, Timer, Event
 import gobject, gtk, appindicator
 
 TOO_FAST = [
-    {'chars':10, 'sec':5},
-    {'chars':5, 'sec':2.5},
-    {'chars':2, 'sec':0.5},
-    {'chars':200, 'sec': 60},
+    {'chars':3, 'sec':1},
+    {'chars':25, 'sec':10},
+    {'chars':150, 'sec': 60},
 ]
 
 TOO_FAST.sort(key=lambda x:x['sec'])
