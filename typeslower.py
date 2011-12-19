@@ -48,7 +48,6 @@ class UpdateLabel(Thread):
                     self.notifications[period['sec']] = notif
                 else:
                     if period['sec'] in self.notifications:
-                        print "want to close"
                         self.notifications[period['sec']].close()
                         del self.notifications[period['sec']]
 
