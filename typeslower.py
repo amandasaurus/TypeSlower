@@ -15,8 +15,8 @@ from threading import Thread, Timer, Event
 import gobject, gtk, appindicator
 
 TOO_FAST = [
-    {'chars':3, 'sec':1},
-    {'chars':25, 'sec':10},
+    {'chars':4, 'sec':1},
+    {'chars':30, 'sec':10},
     {'chars':150, 'sec': 60},
 ]
 
