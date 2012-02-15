@@ -40,21 +40,27 @@ class UpdateLabel(Thread):
                 ratio = num_this_period / period['chars']
                 new_label_parts.append("{ratio:.1f} ({time})".format(time=period['sec'], ratio=ratio))
 
+                warning_string = "{num} keypresses in {time} sec, Max: {max}, ×{ratio:.1f} safe".format(num=num_this_period, time=period['sec'], ratio=ratio, max=period['chars'])
                 if ratio > 1:
-                    warning_string = "{num} keypresses in {time} sec, Max: {max}, ×{ratio:.1f} safe".format(num=num_this_period, time=period['sec'], ratio=ratio, max=period['chars'])
                     notif = self.notifications.get(period['sec'], pynotify.Notification("Slow Down!", warning_string))
                     notif.update("Slow Down!", warning_string)
                     notif.show()
                     self.notifications[period['sec']] = notif
                 else:
                     if period['sec'] in self.notifications:
-                        self.notifications[period['sec']].close()
+                        notif = self.notifications[period['sec']]
+                        notif.close()
                         del self.notifications[period['sec']]
 
 
 
             self.indicator.ind.set_label(" ".join(new_label_parts))
             time.sleep(INTERVAL)
+
+    def close_all_notifications(self):
+        for _, notif in self.notifications.items():
+            notif.close()
+
 
 
 class TypeSlowerIndicator(object):
@@ -101,6 +107,7 @@ class TypeSlowerIndicator(object):
     def cancel(self):
         self.finished.set()
         self.hm.cancel()
+        self.updater.close_all_notifications()
         
 
 
