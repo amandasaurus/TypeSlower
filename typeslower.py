@@ -135,6 +135,3 @@ if __name__ == "__main__":
         gtk.main()
     finally:
         indicator.cancel()
-
-if __name__ == '__main__':
-    main()
