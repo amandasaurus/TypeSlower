@@ -19,7 +19,7 @@ from __future__ import division
 
 import time, datetime, pickle, signal
 import pyxhook
-import math
+import math, os
 
 import pygtk
 pygtk.require('2.0')
@@ -125,8 +125,25 @@ class TypeSlowerIndicator(object):
         self.updater.close_all_notifications()
         
 
+def check_for_notify_osd():
+    if not os.path.isfile("/usr/lib/notification-daemon/notification-daemon"):
+        print "You have not installed notification-daemon, install it with this command:"
+        print "sudo apt-get install notification-daemon"
+        return
+
+    pids= [pid for pid in os.listdir('/proc') if pid.isdigit()]
+
+    for pid in pids:
+        cmdline = open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()
+        if "notify-osd" in cmdline:
+            print "Warning! you are running notify-osd, notifications won't work well. You should switch to notification-daemon with this command:"
+            print "kill %s ; /usr/lib/notification-daemon/notification-daemon & " % pid
+            break
+
+
 
 if __name__ == "__main__":
+    check_for_notify_osd()
     indicator = TypeSlowerIndicator()
 
     try:
