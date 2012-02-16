@@ -64,7 +64,11 @@ class UpdateLabel(Thread):
                 else:
                     if period['sec'] in self.notifications:
                         notif = self.notifications[period['sec']]
-                        notif.close()
+                        try:
+                            notif.close()
+                        except gobject.GError:
+                            # Dunno what this is, but it can sometimes happen
+                            pass
                         del self.notifications[period['sec']]
 
 
