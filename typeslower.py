@@ -31,8 +31,8 @@ import gobject, gtk, appindicator
 
 TOO_FAST = [
     {'chars':4, 'sec':1},
-    {'chars':30, 'sec':10},
-    {'chars':150, 'sec': 60},
+    {'chars':35, 'sec':10},
+    {'chars':180, 'sec': 60},
 ]
 
 TOO_FAST.sort(key=lambda x:x['sec'])
