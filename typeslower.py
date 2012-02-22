@@ -59,8 +59,13 @@ class UpdateLabel(Thread):
                 if ratio > 1:
                     notif = self.notifications.get(period['sec'], pynotify.Notification("Slow Down!", warning_string))
                     notif.update("Slow Down!", warning_string)
-                    notif.show()
-                    self.notifications[period['sec']] = notif
+                    try:
+                        notif.show()
+                        self.notifications[period['sec']] = notif
+                    except gobject.GError:
+                        # Dunno what this is, but it can sometimes happen
+                        pass
+
                 else:
                     if period['sec'] in self.notifications:
                         notif = self.notifications[period['sec']]
