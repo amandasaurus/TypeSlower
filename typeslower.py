@@ -106,7 +106,8 @@ class TypeSlowerIndicator(object):
         ind.set_attention_icon("indicator-messages-new")
         ind.set_label("init")
 
-        menu_item = gtk.MenuItem("test")
+        menu_item = gtk.MenuItem("Quit")
+        menu_item.connect("activate", gtk.main_quit)
         menu = gtk.Menu()
         menu.append(menu_item)
         menu_item.show()
