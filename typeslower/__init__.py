@@ -37,7 +37,6 @@ TOO_FAST = [
 
 TOO_FAST.sort(key=lambda x:x['sec'])
 
-gtk.gdk.threads_init()
 
 class UpdateLabel(Thread):
     def __init__(self, indicator):
@@ -151,6 +150,7 @@ def check_for_notify_osd():
 
 
 def main():
+    gtk.gdk.threads_init()
     check_for_notify_osd()
     indicator = TypeSlowerIndicator()
 
