@@ -150,8 +150,7 @@ def check_for_notify_osd():
             break
 
 
-
-if __name__ == "__main__":
+def main():
     check_for_notify_osd()
     indicator = TypeSlowerIndicator()
 
@@ -161,3 +160,6 @@ if __name__ == "__main__":
         gtk.main()
     finally:
         indicator.cancel()
+
+if __name__ == "__main__":
+    main()
