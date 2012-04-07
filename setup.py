@@ -7,4 +7,9 @@ setup(name="typeslower",
       author="Rory McCann",
       author_email="rory@technomancy.org",
       packages=['typeslower'],
+      entry_points = {
+          'console_scripts': [
+              'typeslower = typeslower:main',
+          ]
+      },
 )
