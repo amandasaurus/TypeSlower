@@ -7,6 +7,7 @@ setup(name="typeslower",
       author="Rory McCann",
       author_email="rory@technomancy.org",
       packages=['typeslower'],
+      #install_requires=['Python Xlib'],
       entry_points = {
           'console_scripts': [
               'typeslower = typeslower:main',
