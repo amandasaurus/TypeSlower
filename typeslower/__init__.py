@@ -51,8 +51,9 @@ class UpdateLabel(Thread):
             new_label_parts = []
             for period in TOO_FAST:
                 num_this_period = len([x for x in self.indicator.keypresses if now - x < period['sec']])
+                buffer = period['chars'] - num_this_period
                 ratio = num_this_period / period['chars']
-                new_label_parts.append("{ratio:.1f} ({time})".format(time=period['sec'], ratio=ratio))
+                new_label_parts.append("{buffer} ({time})".format(time=period['sec'], buffer=buffer))
 
                 warning_string = "{num} keypresses in {time} sec, Max: {max}, ×{ratio:.1f} safe".format(num=num_this_period, time=period['sec'], ratio=ratio, max=period['chars'])
                 if ratio > 1:
