@@ -17,7 +17,7 @@
 
 from __future__ import division
 
-import time, datetime, pickle, signal
+import time, datetime, pickle, signal, subprocess, re
 import pyxhook
 import math, os
 
@@ -150,8 +150,14 @@ def check_for_notify_osd():
             print "kill %s ; /usr/lib/notification-daemon/notification-daemon & " % pid
             break
 
+def find_keyboard_ids():
+    out = subprocess.check_output(['xinput', 'list']).split("\n")
+    matches = [re.search("id=([0-9]+).*slave\s+keyboard", line) for line in out]
+    ids = [m.groups()[0] for m in matches if m is not None]
+    return ids
 
 def main():
+    keyboard_ids = find_keyboard_ids()
     gtk.gdk.threads_init()
     check_for_notify_osd()
     indicator = TypeSlowerIndicator()
