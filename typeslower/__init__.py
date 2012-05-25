@@ -156,7 +156,20 @@ def find_keyboard_ids():
     ids = [m.groups()[0] for m in matches if m is not None]
     return ids
 
+def set_keyboard(ids, turn_on):
+    for id in ids:
+        subprocess.call(["xinput", "set-prop", id, "Device Enabled", '1' if turn_on else '0'])
+        print "Turned on ", id
+
+def enable_keyboard():
+    set_keyboard(keyboard_ids, True)
+
+def disable_keyboard():
+    set_keyboard(keyboard_ids, False)
+    
+
 def main():
+    global keyboard_ids
     keyboard_ids = find_keyboard_ids()
     gtk.gdk.threads_init()
     check_for_notify_osd()
@@ -168,6 +181,9 @@ def main():
         gtk.main()
     finally:
         indicator.cancel()
+        enable_keyboard()  # just in case
+
+    enable_keyboard()   # just in case
 
 if __name__ == "__main__":
     main()
