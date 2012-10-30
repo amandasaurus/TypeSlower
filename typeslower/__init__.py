@@ -136,11 +136,6 @@ class TypeSlowerIndicator(object):
         
 
 def check_for_notify_osd():
-    if not os.path.isfile("/usr/lib/notification-daemon/notification-daemon"):
-        print "You have not installed notification-daemon, install it with this command:"
-        print "sudo apt-get install notification-daemon"
-        return
-
     pids= [pid for pid in os.listdir('/proc') if pid.isdigit()]
 
     for pid in pids:
