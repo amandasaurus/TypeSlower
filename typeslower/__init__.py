@@ -31,7 +31,7 @@ import gobject, gtk, appindicator
 
 TOO_FAST = [
     {'chars':5, 'sec':1},
-    {'chars':40, 'sec':10},
+    {'chars':50, 'sec':10},
     {'chars':180, 'sec': 60},
 ]
 
