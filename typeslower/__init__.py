@@ -86,8 +86,13 @@ class UpdateLabel(Thread):
                 self.num_periods_bad += 1
             else:
                 self.num_periods_good += 1
-            percentage = (self.num_periods_good * 100) / (self.num_periods_good + self.num_periods_bad)
-            self.indicator.ind.set_label(("%d%% " % percentage)+ " ".join(new_label_parts))
+            ratio_good = self.num_periods_good / (self.num_periods_good + self.num_periods_bad)
+            if ratio_good == 1.0:
+                nines = u"∞ - "
+            else:
+                nines = "%.1f / " % ( -1 * math.log10( 1.0 - ratio_good ) )
+            #percentage = (self.num_periods_good * 100) / (self.num_periods_good + self.num_periods_bad)
+            self.indicator.ind.set_label(nines+ " ".join(new_label_parts))
             time.sleep(INTERVAL)
 
     def close_all_notifications(self):
