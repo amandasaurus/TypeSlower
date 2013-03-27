@@ -43,10 +43,13 @@ class UpdateLabel(Thread):
         Thread.__init__(self)
         self.indicator = indicator
         self.notifications = {}
+        self.num_periods_good = 0
+        self.num_periods_bad = 0
 
     def run(self):
         INTERVAL = 0.2
         while not self.indicator.finished.is_set():
+            is_bad = False
             now = time.time()
             new_label_parts = []
             for period in TOO_FAST:
@@ -57,6 +60,7 @@ class UpdateLabel(Thread):
 
                 warning_string = "{num} keypresses in {time} sec, Max: {max}, ×{ratio:.1f} safe".format(num=num_this_period, time=period['sec'], ratio=ratio, max=period['chars'])
                 if ratio > 1:
+                    is_bad = True
                     notif = self.notifications.get(period['sec'], pynotify.Notification("Slow Down!", warning_string))
                     notif.update("Slow Down!", warning_string)
                     try:
@@ -78,7 +82,12 @@ class UpdateLabel(Thread):
 
 
 
-            self.indicator.ind.set_label(" ".join(new_label_parts))
+            if is_bad:
+                self.num_periods_bad += 1
+            else:
+                self.num_periods_good += 1
+            percentage = (self.num_periods_good * 100) / (self.num_periods_good + self.num_periods_bad)
+            self.indicator.ind.set_label(("%d%% " % percentage)+ " ".join(new_label_parts))
             time.sleep(INTERVAL)
 
     def close_all_notifications(self):
